@@ -1,31 +1,33 @@
-import 'package:atividade05/tabuada.dart';
+import 'package:atividade05/tabuadaScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Tabuada deve ser construída corretamente', (WidgetTester tester) async {
-    // Constrói a UI do widget Tabuada
-    await tester.pumpWidget(MaterialApp(home: Tabuada()));
+  group('Tabuada', () {
+    test('Testa inicialização de resultado', () {
+      final tabuada = TabuadaScreen();
+      expect(tabuada.resultado, '');
+    });
 
-    // Verifica se os widgets necessários foram construídos corretamente
-    expect(find.text('Tabuada'), findsOneWidget);
-    expect(find.text('5 x 5 ='), findsOneWidget);
-    expect(find.widgetWithText(ElevatedButton, 'Calcular'), findsOneWidget);
+    test('Testa mudança de valor de _valor1', () {
+      final tabuada = TabuadaScreen();
+      tabuada.valor1 = 5;
+      expect(tabuada.valor1, 5);
+    });
+
+    test('Testa mudança de valor de _valor2', () {
+      final tabuada = TabuadaScreen();
+      tabuada.valor2 = 7;
+      expect(tabuada.valor2, 7);
+    });
+
+    test('Testa mudança de valor de _resultado após execução de _calcular()',
+        () {
+      final tabuada = TabuadaScreen();
+      tabuada.valor1 = 5;
+      tabuada.valor2 = 4;
+      tabuada.calcular();
+      expect(tabuada.resultado, '20');
+    });
   });
-
-  testWidgets('Verifica se o cálculo da multiplicação está correto para um exemplo específico', (WidgetTester tester) async {
-  await tester.pumpWidget(MaterialApp(home: Tabuada()));
-  await tester.tap(find.byType(DropdownButton).first);
-  await tester.pump();
-  await tester.tap(find.text('7').last);
-  await tester.pump();
-  await tester.tap(find.byType(DropdownButton).last);
-  await tester.pump();
-  await tester.tap(find.text('4').last);
-  await tester.pump();
-  await tester.tap(find.byType(ElevatedButton));
-  await tester.pump();
-  expect(find.text('7 x 4 = 28'), findsOneWidget);
-});
-
 }

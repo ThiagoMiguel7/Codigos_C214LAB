@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Tabuada extends StatefulWidget {
-  set _valor1(int _valor1) {}
+class TabuadaScreen extends StatefulWidget {
+  final _TabuadaState state = _TabuadaState();
+  int get valor1 => state.valor1;
+  int get valor2 => state.valor2;
+  String get resultado => state.resultado;
+
+  set valor1(int val) {
+    valor1 = val;
+  }
+
+  set valor2(int val) {
+    valor2 = val;
+  }
+
+  set resultado(String res) {
+    resultado = res;
+  }
+
+  void calcular() {
+    state.calcular();
+  }
 
   @override
-  _TabuadaState createState() => _TabuadaState();
+  // ignore: library_private_types_in_public_api
+  _TabuadaState createState() => state;
 }
 
-class _TabuadaState extends State<Tabuada> {
-  int _valor1 = 1;
-  int _valor2 = 1;
-  String _resultado = '';
+class _TabuadaState extends State<TabuadaScreen> {
+  int valor1 = 1;
+  int valor2 = 1;
+  String resultado = '';
 
-  void _calcular() {
+  void calcular() {
     setState(() {
-      _resultado = '${_valor1 * _valor2}';
+      resultado = '${valor1 * valor2}';
     });
   }
 
@@ -34,23 +54,23 @@ class _TabuadaState extends State<Tabuada> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '$_valor1 x $_valor2 =',
+              '$valor1 x $valor2 =',
               style: GoogleFonts.lato(fontSize: 24.0),
             ),
             Text(
-              _resultado,
-              style: GoogleFonts.lato(
-                  fontSize: 34.0, fontWeight: FontWeight.bold),
+              resultado,
+              style:
+                  GoogleFonts.lato(fontSize: 34.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DropdownButton<int>(
-                  value: _valor1,
+                  value: valor1,
                   onChanged: (int? value) {
                     setState(() {
-                      _valor1 = value!;
+                      valor1 = value!;
                     });
                   },
                   items: List.generate(10, (index) {
@@ -68,10 +88,10 @@ class _TabuadaState extends State<Tabuada> {
                   style: GoogleFonts.lato(),
                 ),
                 DropdownButton<int>(
-                  value: _valor2,
+                  value: valor2,
                   onChanged: (int? value) {
                     setState(() {
-                      _valor2 = value!;
+                      valor2 = value!;
                     });
                   },
                   items: List.generate(10, (index) {
@@ -85,7 +105,7 @@ class _TabuadaState extends State<Tabuada> {
                   }),
                 ),
                 ElevatedButton(
-                  onPressed: _calcular,
+                  onPressed: calcular,
                   child: Text(
                     'Calcular',
                     style: GoogleFonts.lato(),
@@ -100,4 +120,4 @@ class _TabuadaState extends State<Tabuada> {
   }
 }
 
-void main() => runApp(MaterialApp(home: Tabuada()));
+void main() => runApp(MaterialApp(home: TabuadaScreen()));
